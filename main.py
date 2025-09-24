@@ -4,6 +4,7 @@ import requests
 import json
 from pydantic_settings import BaseSettings
 from starlette.middleware.cors import CORSMiddleware
+from starlette.staticfiles import StaticFiles
 
 origins = [
     'http://localhost:3000',
@@ -19,6 +20,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 class Settings(BaseSettings):
     BRAVO_API_KEY: str = ""
