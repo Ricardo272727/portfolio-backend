@@ -3,14 +3,28 @@ from pydantic import BaseModel
 import requests
 import json
 from pydantic_settings import BaseSettings
+from starlette.middleware.cors import CORSMiddleware
+
+origins = [
+    'http://localhost:3000',
+    'https://ricardo272727.github.io'
+]
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    #allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class Settings(BaseSettings):
     BRAVO_API_KEY: str = ""
 
 settings = Settings()
+
 
 class Contact(BaseModel):
     fullName: str
